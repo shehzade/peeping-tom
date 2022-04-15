@@ -1,5 +1,12 @@
+//This is me ignoring the fact that in the auxiliary header file, I used the unsafe localtime function instead of the safe localtime_s function
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <iostream>
 #include <Windows.h>
+#include "Auxiliary.h"
+#include "KeyConstants.h"
+#include "Encoder.h"
+
 
 //STD Namespace Imports
 using std::cout;
@@ -12,7 +19,7 @@ bool isConsoleVisible();
 int main()
 {
     
-    hideConsole();
+    /*hideConsole();
     
     if (!isConsoleVisible())
     {
@@ -21,8 +28,9 @@ int main()
     else
     {
         exit(-1);
-    }
+    }*/
 
+    
 
     return 0;
 }
