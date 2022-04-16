@@ -1,5 +1,5 @@
-#ifndef KEYCONSTANTS_H
-#define KEYCONSTANTS_H
+#ifndef KEYBOARD_H
+#define KEYBOARD_H
 
 #include <map>
 #include <string>
@@ -238,4 +238,4 @@ std::map<int, KeyPair> KeyMap::KeyLookupEN = {
 };
 
 
-#endif // !KEYCONSTANTS_H
+#endif // !KEYBOARD_H

@@ -20,13 +20,19 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KeyConstants.h">
+    <ClInclude Include="Keyboard.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Auxiliary.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Encoder.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IO.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -4,8 +4,10 @@
 #include <iostream>
 #include <Windows.h>
 #include "Auxiliary.h"
-#include "KeyConstants.h"
+#include "Keyboard.h"
 #include "Encoder.h"
+#include "IO.h"
+#include "Timer.h"
 
 
 //STD Namespace Imports
@@ -30,7 +32,9 @@ int main()
         exit(-1);
     }*/
 
-    
+    Auxiliary::DateTime dt;
+
+    std::cout << dt.getTDString(".","_");
 
     return 0;
 }

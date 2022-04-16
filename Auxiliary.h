@@ -79,27 +79,27 @@ namespace Auxiliary
 
 		//The dateToString method will format the date as a string reading mm/dd/yyyy and will return it
 
-		const std::string getDateString()
+		const std::string getDateString(const std::string &dateSeperator)
 		{
-			return (month < 10 ? "0" : "") + toString(month) + "/"
-				+ (date < 10 ? "0" : "") + toString(date) + "/"
+			return (month < 10 ? "0" : "") + toString(month) + dateSeperator
+				+ (date < 10 ? "0" : "") + toString(date) + dateSeperator
 				+ toString(year);
 		}
 
 		//The timeToString method will format the time as a string reading HH:MM:SS and will return it
 
-		const std::string getTimeString()
+		const std::string getTimeString(const std::string &hmsSeperator)
 		{
-			return (hour < 10 ? "0" : "") + toString(hour) + ":"
-				+ (minute < 10 ? "0" : "") + toString(minute) + ":"
+			return (hour < 10 ? "0" : "") + toString(hour) + hmsSeperator
+				+ (minute < 10 ? "0" : "") + toString(minute) + hmsSeperator
 				+ (second < 10 ? "0" : "") + toString(second);
 		}
 
 		//The tdToString will return both the time and the date reading mm/dd/yyyy HH:MM:SS
 
-		const std::string getTDString()
+		const std::string getTDString(const std::string dateSeperator, const std::string hmsSeperator)
 		{
-			return getDateString() + " " + getTimeString();
+			return getDateString(dateSeperator) + "-" + getTimeString(hmsSeperator);
 		}
 
 	};
@@ -126,7 +126,7 @@ namespace Auxiliary
 		DateTime currentTime;
 
 		//Then we simply call the object's string method to create a log prefix for error messages
-		errorLog << "[" << currentTime.getTDString() << "]" << " " << stringToLog << std::endl;
+		errorLog << "[" << currentTime.getTDString("/",":") << "]" << " " << stringToLog << std::endl;
 
 		errorLog.close();
 	}
