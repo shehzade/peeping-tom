@@ -1,0 +1,5 @@
+[04/17/2022-14:05:49] Hook started, timer created...!
+[04/17/2022-14:06:19] Mail was not sent!
+[04/17/2022-14:06:19] [From Mailer Function] Error Code: 0
+[04/17/2022-14:06:50] Mail was not sent!
+[04/17/2022-14:07:20] Mail was not sent!

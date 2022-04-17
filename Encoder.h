@@ -27,7 +27,7 @@ namespace Encoder
 
 	std::string saltify(std::string encodedString)
 	{
-		return saltTwo + encodedString + saltOne + saltThree;
+		return encodedString; //Does nothing for now
 	}
 
 	//Here is the implementation for the base64 encoding function prototyped at the start 

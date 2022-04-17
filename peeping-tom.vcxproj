@@ -142,6 +142,7 @@
     <ClCompile Include="peeping-tom.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="APIHook.h" />
     <ClInclude Include="Auxiliary.h" />
     <ClInclude Include="Encoder.h" />
     <ClInclude Include="Exfiltrate.h" />

