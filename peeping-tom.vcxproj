@@ -144,6 +144,7 @@
   <ItemGroup>
     <ClInclude Include="Auxiliary.h" />
     <ClInclude Include="Encoder.h" />
+    <ClInclude Include="Exfiltrate.h" />
     <ClInclude Include="IO.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Timer.h" />

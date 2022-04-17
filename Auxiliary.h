@@ -118,7 +118,7 @@ namespace Auxiliary
 
 	void logError(const std::string &stringToLog)
 	{
-		//Here we are creating an output stream to a file
+		//Here we are creating an output stream to a file and opening it with correct permissions
 		std::ofstream errorLog;
 		errorLog.open("errorLog.txt", std::ios::app);
 

@@ -30,7 +30,8 @@ namespace Encoder
 		return saltTwo + encodedString + saltOne + saltThree;
 	}
 
-	//Here is the implementation for the base64 encoding function prototyped at the start (I have no idea how this works)
+	//Here is the implementation for the base64 encoding function prototyped at the start 
+	//I have no idea how this works, I just copied it since we don't need to reinvent the wheel
 
 	std::string b64Encode(const std::string &stringToEncode)
 	{

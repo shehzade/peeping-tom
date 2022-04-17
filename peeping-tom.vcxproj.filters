@@ -35,5 +35,8 @@
     <ClInclude Include="Timer.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Exfiltrate.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

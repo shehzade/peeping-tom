@@ -7,7 +7,8 @@
 #include "Keyboard.h"
 #include "Encoder.h"
 #include "IO.h"
-#include "Timer.h"
+#include "Timer.h" //Remove or replace w/ something better
+#include "Exfiltrate.h"
 
 
 //STD Namespace Imports
@@ -32,9 +33,7 @@ int main()
         exit(-1);
     }*/
 
-    Auxiliary::DateTime dt;
-
-    std::cout << dt.getTDString(".","_");
+    
 
     return 0;
 }
