@@ -11,8 +11,6 @@
 #include "Exfiltrate.h"
 #include "APIHook.h"
 
-
-//STD Namespace Imports
 using std::cout;
 
 //Method Prototypes
