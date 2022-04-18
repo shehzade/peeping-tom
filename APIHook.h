@@ -115,7 +115,7 @@ namespace APIHook
 				//Indicate so in the log [/SHIFT], otherwise we don't care about a, b, or c being released
 
 				std::string keyName = KeyMap::KeyLookupEN[keyPress->vkCode].humanReadableName;
-				keyName.insert(, "/");
+				keyName.insert(2, "/");
 				workingKeyLog += keyName;
 			}
 		}
