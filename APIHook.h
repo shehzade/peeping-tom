@@ -72,7 +72,7 @@ namespace APIHook
 		
 		/*	
 			WM_KEYDOWN is when a regular key is pressed (i.e caps lock, a, b, c)
-			WM_SYSKEYDOWN is when combination keys or system buttons are pressed (i.e alt+tab, win) 
+			WM_SYSKEYDOWN is when combination keys or system buttons are pressed (i.e alt+tab, alt+insert) 
 			WM_KEYUP is when a regular key is released
 			WM_SYSKEYUP is when a system key is released
 		*/
