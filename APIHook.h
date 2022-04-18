@@ -105,10 +105,10 @@ namespace APIHook
 				keyCode == VK_MENU ||
 				keyCode == VK_LMENU ||
 				keyCode == VK_RMENU ||
-				keyCode == VK_CAPITAL ||
-				keyCode == VK_NUMLOCK ||
-				keyCode == VK_LWIN ||
-				keyCode == VK_RWIN)
+				//keyCode == VK_CAPITAL ||
+				//keyCode == VK_NUMLOCK ||
+				//keyCode == VK_LWIN ||
+				//keyCode == VK_RWIN)
 			{
 				//Indicate so in the log [/SHIFT], otherwise we don't care about a, b, or c being released
 
