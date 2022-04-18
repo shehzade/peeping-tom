@@ -7,6 +7,7 @@
 #include <string>
 #include <sstream>
 #include <fstream>
+#include "IO.h"
 
 namespace Auxiliary
 {
@@ -70,13 +71,6 @@ namespace Auxiliary
 		DateTime(int m, int d, int y)
 			: month(m), date(d), year(y), hour(0), minute(0), second(0) {};
 
-		//Below is a method which will set the current date and time in the struct attributes by calling the default constructor
-		
-		/*const DateTime now()
-		{
-			return DateTime();
-		}*/
-
 		//The dateToString method will format the date as a string reading mm/dd/yyyy and will return it
 
 		const std::string getDateString(const std::string &dateSeperator)
@@ -97,9 +91,12 @@ namespace Auxiliary
 
 		//The tdToString will return both the time and the date reading mm/dd/yyyy HH:MM:SS
 
-		const std::string getTDString(const std::string dateSeperator, const std::string hmsSeperator)
+		const std::string getDTString(
+			const std::string dateSeperator,
+			const std::string dtSeperator, 
+			const std::string hmsSeperator)
 		{
-			return getDateString(dateSeperator) + "-" + getTimeString(hmsSeperator);
+			return getDateString(dateSeperator) + dtSeperator + getTimeString(hmsSeperator);
 		}
 
 	};
@@ -118,17 +115,38 @@ namespace Auxiliary
 
 	void logError(const std::string &stringToLog)
 	{
+		/* Need a workaround to get AppData path for errorLogPath since I'm getting compile errors
+		due to the order of the header files being included. For now, I will get it from the WinAPI 
+		directly, and when I seperate the .h into .h/.cpp files, I'll try to use IO::getAppDataPath() again. */
+		
+		//std::string errorLogPath = IO::getAppDataPath(true);
+		
+		std::string errorLogPath = getenv("APPDATA") + std::string("\\Microsoft\\CLR\\");
+		std::string errorLogName = "ErrorLog.txt";
+
 		//Here we are creating an output stream to a file and opening it with correct permissions
 		std::ofstream errorLog;
-		errorLog.open("errorLog.txt", std::ios::app);
+		errorLog.open(errorLogPath + errorLogName, std::ios::app);
 
 		//Now we are creating a date time struct object with the default constructor which will assign current time values to relevant attributes
 		DateTime currentTime;
 
 		//Then we simply call the object's string method to create a log prefix for error messages
-		errorLog << "[" << currentTime.getTDString("/",":") << "]" << " " << stringToLog << std::endl;
+		errorLog << "[" << currentTime.getDTString("/"," ",":") << "]" << "\t" << stringToLog << std::endl;
 
 		errorLog.close();
+	}
+
+	void hideConsole()
+	{
+		//This returns a windows handle (HWND) to ShowWindow() which will in turn hide it, use SW_RESTORE to bring back!
+
+		ShowWindow(GetConsoleWindow(), SW_HIDE);
+	}
+
+	bool isConsoleVisible()
+	{
+		return IsWindowVisible(GetConsoleWindow());
 	}
 
 	

