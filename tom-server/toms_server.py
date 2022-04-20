@@ -1,4 +1,4 @@
-from log_decryption import *
+from decryption import *
 
 def main():
     

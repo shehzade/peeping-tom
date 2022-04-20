@@ -24,6 +24,7 @@
     <ProjectGuid>{63ec96c5-075f-4f22-92ec-cf28a2f70737}</ProjectGuid>
     <RootNamespace>peepingtom</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>peeping-client</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -78,11 +79,11 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\Abdullah Beta\source\repos\peeping-tom\crypto-headers;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\Abdullah Beta\source\repos\peeping-client\crypto-headers;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Users\Abdullah Beta\source\repos\peeping-tom\crypto-headers;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\Abdullah Beta\source\repos\peeping-client\crypto-headers;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -147,7 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="peeping-tom.cpp" />
+    <ClCompile Include="peeping-client.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="APIHook.h" />

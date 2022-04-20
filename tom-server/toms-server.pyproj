@@ -5,12 +5,12 @@
     <ProjectGuid>71bda8ea-08bc-4ab1-9b40-614b167beb64</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>tom_toolkit.py</StartupFile>
+    <StartupFile>toms_server.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
-    <Name>tom-toolkit</Name>
+    <Name>toms-server</Name>
     <RootNamespace>tom-server</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -24,7 +24,7 @@
   <ItemGroup>
     <Compile Include="decryption.pyw" />
     <Compile Include="dns_exfil.pyw" />
-    <Compile Include="tom_toolkit.py" />
+    <Compile Include="toms_server.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

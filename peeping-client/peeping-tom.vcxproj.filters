@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="peeping-tom.cpp">
+    <ClCompile Include="peeping-client.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
