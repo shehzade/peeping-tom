@@ -2,7 +2,7 @@ from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
 from binascii import unhexlify
 
-def decryptLog(encryptedLog, aesKey, IV):
+def decrypt_log(encryptedLog, aesKey, IV):
 
     byteCipher = unhexlify(encryptedLog)
     byteKey = unhexlify(aesKey)

