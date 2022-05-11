@@ -5,7 +5,7 @@ VisualStudioVersion = 17.1.32407.343
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "peeping-client", "peeping-tom.vcxproj", "{63EC96C5-075F-4F22-92EC-CF28A2F70737}"
 EndProject
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "toms-server", "..\tom-server\toms-server.pyproj", "{71BDA8EA-08BC-4AB1-9B40-614B167BEB64}"
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "toms-server", "..\toms-server\toms-server.pyproj", "{71BDA8EA-08BC-4AB1-9B40-614B167BEB64}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
