@@ -38,7 +38,7 @@ int main()
             DispatchMessage(&Msg);
         }
 
-        APIHook::logExfilTimer.stopTimer();
+        //APIHook::logExfilTimer.stopTimer();
 
     }
 
