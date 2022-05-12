@@ -4,6 +4,10 @@ from binascii import unhexlify
 
 def decrypt_data(cipher_text, aes_key, aes_iv):
 
+    cipher_text.strip()
+    aes_key.strip()
+    aes_iv.strip()
+
     byte_cipher = unhexlify(cipher_text)
     byte_key = unhexlify(aes_key)
     byte_iv = unhexlify(aes_iv)
