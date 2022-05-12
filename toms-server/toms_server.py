@@ -10,12 +10,14 @@ def main():
 
     while(True):
 
-        finalReq = ""
+        clean_request_data = ""
         for char in get_raw_post_data():
             if(ord(char) != 0):
-                finalReq += char
+                clean_request_data += char
 
-        print(finalReq)
+        #extract good stuff from clean_post_data and begin decryption and log file creation
+
+
 
 if __name__ == "__main__":
     main()

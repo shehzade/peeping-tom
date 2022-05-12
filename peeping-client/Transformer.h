@@ -14,12 +14,17 @@ namespace Transformer
 {
 	//AES Encryption Groundwork | AES-256 keys will be used
 
-	static constexpr size_t AES_KEY_SIZE = 256 / 8;
+	//This key must be changed before each deployment
+	std::string keyStr = "6E5A7234743777217A25432A462D4A614E645267556B58703273357638782F41";
 
+	static constexpr size_t AES_KEY_SIZE = 256 / 8;
 	std::vector<uint8_t> key(AES_KEY_SIZE);	
+
 	std::vector<uint8_t> iv(CryptoPP::AES::BLOCKSIZE);
+	
 	CryptoPP::AutoSeededRandomPool randNumGen;
 
+	std::vector<uint8_t> hexStringToByteArray(std::string hex);
 
 	/* The functions below will make use of the publicly available Crypto++ library
 	to encrypt the strings that make it to the key log file and return the keys/ivs.
@@ -34,7 +39,10 @@ namespace Transformer
 
 	std::string aesEncrypt(std::string plainText)
 	{
-		randNumGen.GenerateBlock(key.data(), key.size());
+		//Can't securley transfer decryption key, so I will just make the user preset it b4 compilation
+		//randNumGen.GenerateBlock(key.data(), key.size());
+
+		key = hexStringToByteArray(keyStr);
 		randNumGen.GenerateBlock(iv.data(), iv.size());
 
 		auto aesData = CryptoPP::AES::Encryption(key.data(), key.size());
@@ -68,7 +76,7 @@ namespace Transformer
 	
 	std::string getEncryptionKey()
 	{
-		return byteArrayToHexString(key);
+		return keyStr;
 	}
 	
 	std::string getIV()
@@ -76,6 +84,21 @@ namespace Transformer
 		return byteArrayToHexString(iv);
 	}
 
+	//Source: https://stackoverflow.com/questions/17261798/converting-a-hex-string-to-a-byte-array
+
+	std::vector<uint8_t> hexStringToByteArray(std::string hex)
+	{
+			std::vector<uint8_t> byteArray;
+
+			for (unsigned int i = 0; i < hex.length(); i += 2) {
+				std::string byteString = hex.substr(i, 2);
+				char byte = (char)strtol(byteString.c_str(), NULL, 16);
+				byteArray.push_back(byte);
+			}
+
+			return byteArray;
+		
+	}
 }
 
 #endif // !TRANSFORMER_H

