@@ -22,9 +22,9 @@ def main():
         hex_iv = encrypted_data[0:31]
         encrypted_log = encrypted_data[32:len(encrypted_data)-1]
 
-        decrypted_log = decrypt_data(encrypted_log, hex_key, hex_iv)
+        #decrypted_log = decrypt_data(encrypted_log, hex_key, hex_iv)
 
-        print(decrypted_log)
+        print(encrypted_log + "\n" + hex_key + "\n" + hex_iv)
 
 
 
