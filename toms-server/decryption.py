@@ -2,15 +2,15 @@ from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
 from binascii import unhexlify
 
-def decrypt_data(encryptedLog, aesKey, IV):
+def decrypt_data(cipher_text, aes_key, aes_iv):
 
-    byteCipher = unhexlify(encryptedLog)
-    byteKey = unhexlify(aesKey)
-    byteIV = unhexlify(IV)
+    byte_cipher = unhexlify(cipher_text)
+    byte_key = unhexlify(aes_key)
+    byte_iv = unhexlify(aes_iv)
     
-    aesDecryptor = AES.new(byteKey, AES.MODE_CBC, byteIV)
+    aes_decryptor = AES.new(byte_key, AES.MODE_CBC, byte_iv)
 
-    originalData = unpad(aesDecryptor.decrypt(byteCipher), AES.block_size)
+    plain_text = unpad(aes_decryptor.decrypt(byte_cipher), AES.block_size)
     
-    return originalData
+    return plain_text
    
