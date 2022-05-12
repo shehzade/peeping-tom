@@ -41,9 +41,9 @@ namespace Transformer
 	{
 		//Can't securley transfer decryption key, so I will just make the user preset it b4 compilation
 		//randNumGen.GenerateBlock(key.data(), key.size());
-
-		key = hexStringToByteArray(keyStr);
+		
 		randNumGen.GenerateBlock(iv.data(), iv.size());
+		key = hexStringToByteArray(keyStr);
 
 		auto aesData = CryptoPP::AES::Encryption(key.data(), key.size());
 		auto cbcData = CryptoPP::CBC_Mode_ExternalCipher::Encryption(aesData, iv.data());

