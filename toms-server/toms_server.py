@@ -23,8 +23,8 @@ def main():
         encrypted_log = encrypted_data[32:len(encrypted_data)-1]
 
         #decrypted_log = decrypt_data(encrypted_log, hex_key, hex_iv)
-
-        print(encrypted_log + "\n" + hex_key + "\n" + hex_iv)
+        
+        print(seperated_request_data + "\n\n" + encrypted_data + "\n\n" + hex_iv + "\n\n" + encrypted_log)
 
 
 
