@@ -28,6 +28,8 @@ def main():
         print()
         print(encrypted_data)
         print()
+        print(hex_iv)
+        print()
         print(encrypted_log)
 
 
