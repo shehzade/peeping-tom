@@ -24,6 +24,7 @@
   <ItemGroup>
     <Compile Include="decryption.py" />
     <Compile Include="collection.py" />
+    <Compile Include="key_generation.py" />
     <Compile Include="toms_server.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
