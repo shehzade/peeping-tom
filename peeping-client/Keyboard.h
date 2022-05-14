@@ -4,12 +4,15 @@
 #include <map>
 #include <string>
 
+/*
+
+This header file will include the functionality to create objects which pair a 
+virtual key name (i.e VK10) with a human readable name for it (i.e [up])
+
+*/
+
 class KeyPair 
 {
-	/*
-	This class is simply to create an object which pairs a virtual key name (i.e VK10)
-	with a human readable name for it (i.e [up])
-	*/
 
 	public:
 
@@ -24,9 +27,11 @@ class KeyPair
 class KeyMap
 {
 	/*
+    
 	This class takes the key pairs made with the class above, and inserts them into a map to build a collection
 	of pairs which can be used as a lookup table for keys that are captured by the Windows API
-	*/
+	
+    */
 
 	public:
 
@@ -35,12 +40,14 @@ class KeyMap
 };
 
 /*
-    Below, our static key lookup map which was declared in the class above
-    is initialized with a standared key map for windows on an english keyboard
 
-    So, for entry one, "0xC1" would be the integer key into the map, and the 
-    {"[VK_ABNT_C1]", "[Abnt C1]"} would be an initialized object of the
-    KeyPair class when inserted into the map alongside the int key
+Below, our static key lookup map which was declared in the class above
+is initialized with a standared key map for windows on an english keyboard
+
+So, for entry one, "0xC1" would be the integer key into the map, and the 
+{"[VK_ABNT_C1]", "[Abnt C1]"} would be an initialized object of the
+KeyPair class when inserted into the map alongside the int key
+
 */
 
 std::map<int, KeyPair> KeyMap::KeyLookupEN = {
