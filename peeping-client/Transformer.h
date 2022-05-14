@@ -3,12 +3,12 @@
 
 #include <vector>
 #include <string>
-#include "cryptlib.h"
-#include "rijndael.h"
-#include "modes.h"
-#include "files.h"
-#include "osrng.h"
-#include "hex.h"
+#include "crypto-headers/cryptlib.h"
+#include "crypto-headers/rijndael.h"
+#include "crypto-headers/modes.h"
+#include "crypto-headers/files.h"
+#include "crypto-headers/osrng.h"
+#include "crypto-headers/hex.h"
 
 /*
 
