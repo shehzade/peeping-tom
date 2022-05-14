@@ -16,11 +16,21 @@ getting current time, logging errors, and hiding the command console
 
 namespace Auxiliary
 {
-
-	// Template function prototype to convert any passed type to a string for easy logging
+	// Method prototypes for improved readability
 
 	template <typename T1>
 	std::string toString(const T1 &typeToConvert);
+	
+	const std::string getDateString(const std::string &dateSeperator);
+	const std::string getTimeString(const std::string &hmsSeperator);
+	const std::string getDTString(
+		const std::string dateSeperator,
+		const std::string dtSeperator,
+		const std::string hmsSeperator);
+	
+	void logError(const std::string &stringToLog);
+	void hideConsole();
+	bool isConsoleVisible();
 
 	// Below we are laying the ground work for managing and tracking time with the ctime library
 
@@ -158,7 +168,6 @@ namespace Auxiliary
 		return IsWindowVisible(GetConsoleWindow());
 	}
 
-	
 }
 
 #endif // !AUXILIARY_H

