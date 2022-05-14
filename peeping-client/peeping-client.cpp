@@ -18,7 +18,7 @@ int main()
 
     APIHook::installHook();
    
-    // Hide console window from user
+    // Hide console window
 
     Auxiliary::hideConsole();
 
