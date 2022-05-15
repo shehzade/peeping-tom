@@ -3,9 +3,9 @@
 
 ###  Remote keylogger for Windows written in C++
 
-![Keylogger](https://cdn-icons-png.flaticon.com/512/1918/1918384.png)
+<img src="https://cdn-icons-png.flaticon.com/512/6626/6626213.png" alt="Keylogger Icon" width="400"/>
 
-Welcome to the peeping-tom repo! peeping-tom is a two-part program with a peeping-client deployed on a target and a toms-server listening on the attacker machine for keylogs. Getting up and running requires a decent amount of set up so make sure to carefully read all the instructions below.
+Welcome to the peeping-tom project repo! Peeping-tom is a two-part program with a peeping-client deployed on a target and a toms-server listening for keylogs on the attacker machine. Getting up and running requires a decent amount of set up, so make sure to carefully read and follow the instructions below.
 
 Of course, if you have any suggestions, feedback, issues, etc... feel free to reach out or create an issue/pull request. 
 ____
@@ -32,11 +32,11 @@ ____
 
 **Step 1: Open peeping-tom solutions file in Visual Studio**
 
-First things first, download and install the community edition of Visual Studio onto your machine from the link above. When moving through the installer, make sure to select the Python development and the Desktop development with C++ workloads as they will be necessary to properly load and compile the project.
+First things first, download and install the community edition of Visual Studio onto your machine from the [link above](###Pre-Requisites). When moving through the installer, make sure to select the "Python development" and the "Desktop development with C++" workloads as they will be necessary to properly load and compile the project.
 
 ![Visual Studio Required Workloads](https://i.imgur.com/AfawekT.png)
 
-Once everything has finished installing, launch Visual Studio and select the "Clone a repository" option. Enter the git URL and hit clone.
+Once everything has finished installing, launch Visual Studio and select the "Clone a repository" option. Enter the project's git URL and hit clone.
 
 ![Visual Studio Project Clone](https://i.imgur.com/LGDinMz.png)
 
@@ -46,41 +46,41 @@ If everything loaded correctly, you should see both projects in the solutions ex
 
 **Step 2: Configure compiler/linker options in Visual Studio**
 
-Now that the tool is loaded into Visual Studio, we will need to change a couple of options and compile a library before building which will remove any program dependencies when running on the target.
+Now that the tool is loaded into Visual Studio, we will need to change a couple of options and compile a library before building. This will remove any program/library dependencies when running on the target.
 
 The first task is to statically compile the Crypto++ library which is used for encryption in the keylogger. Start this process by downloading version 8.6.0 of the library [here](https://www.cryptopp.com/#download).
 
-Once you've downloaded the ZIP file, extract it to a folder, navigate into it, and launch the cryptest.sln with Visual Studio.
+Once you've downloaded the ZIP file, extract it to a folder, navigate into it, and launch the cryptest.sln with Visual Studio. You should now have two Visual Studio windows, one with the peeping-tom solution, and the other with cryptest solution open.
 
 ![Cryptest.sln File](https://i.imgur.com/Iwh9Bxd.png)
 
-Once the cryptest.sln file has loaded into Visual Studio, click on "Debug" on the top toolbar and set it to "Release." Also change the architecture to x64.
+Once the cryptest.sln file has loaded into Visual Studio, click on "Debug" on the top toolbar and set it to "Release." Also change the architecture to x64 as shown below.
 
 ![Visual Studio Release Option](https://i.imgur.com/AmDDEEa.png)
 
-Then, right-click on the cryptlib project, and select properties. Change the options as shown below. 
+Now, right-click on the cryptlib project, and select properties. Change the highlighted option as shown.
 
 ![Visual Studio Code Generation Option](https://i.imgur.com/XjbpjCP.png)
 
-Once that is complete, build the cryptest solution as shown.
+Once that is complete, build the cryptest solution.
 
 ![Visual Studio Build Project](https://i.imgur.com/H0gltNu.png)
 
-The building will take a good minute or two, but once its done, a file named cryptlib.lib should appear in the your version of the path below. Find the file and copy its path for the next step.
+The build will take a good minute or two, but once it's done, a file named cryptlib.lib should appear in the your version of the path below. Find the file and copy its path for the next step.
 
 ```console
 C:\Users\Abdullah Beta\Downloads\cryptopp860\x64\Output\Release\cryptlib.lib
 ```
 
-Once you've located the file and copied its path, return to the peeping-tom solution in Visual Studio. Right-click on the peeping-client project, and select properties. Navigate to the option showed in the screenshot below, and paste the path of cryptlib.lib.
+Once you've located the file and copied its path, return to the Visual Studio window that has the peeping-tom solution open. Right-click on the peeping-client project, and select properties. Navigate to the option showed in the screenshot below, and paste the path of cryptlib.lib.
 
 ![Visual Studio Linker Include](https://i.imgur.com/V6qjQ0f.png)
 
-Make sure that the peeping-client project is also set to "Release" and that the architecture is set to x64. DON'T build the peeping-tom solution yet as there are still some changes that need to be made in the source code.
+Make sure that the peeping-client project is also set to "Release" and that the architecture is set to x64. **DON'T** build the peeping-tom solution yet as there are still some changes that need to be made in the source code.
 
 **Step 3: Open an public tunnel to localhost:80**
 
-Onto to the tunnel. Once you've created an Ngrok account, download Ngrok for your OS from the link above and extract the executable from the ZIP file. Before opening a tunnel you will need to grab your personal authentication token from your account as shown below.
+Onto to the tunnel. Once you've created an Ngrok account, download Ngrok for your OS from the [link above](###Pre-Requisites) and extract the executable from the ZIP file. Before opening a tunnel, you will need to grab a personal authentication token from your account as shown below.
 
 ![Ngrok Authtoken](https://i.imgur.com/fLOreRu.png)
 
@@ -96,18 +96,18 @@ Finally, go ahead and open the tunnel using the following command:
 ngrok http 80 --scheme=http
 ```
 
-You should see something similar to the image below. Great! Now you're all set for this step. Go ahead and grab the "Forwarding" address highlighted and save it someplace safe for later.
+If all went well, you should see something similar to the image below. Great! Now you're all set for this step. Go ahead and grab the "Forwarding" address highlighted and save it someplace safe for later.
 
 ![Ngrok Tunnel URL](https://i.imgur.com/9PSgeVG.png)
 
 **Step 4: Generate new AES-256 key**
 
-At this point, you can go ahead and download Python onto your machine. Once that is installed, right-click on the toms-server project and select "Open Command Prompt Here..."
+At this point, you can go ahead and download Python onto your machine. Once that is installed, open a CMD window in the toms-server project directory.
 
 Install the required dependencies with:
 
 ```console
-pip install -r requirements .txt 
+pip install -r requirements.txt 
 ```
 Once everything is ready, run:
 
@@ -118,17 +118,17 @@ This should output a 64 character AES-256 key which you will also need later on,
 
 **Step 5: Set required fields in peeping-client source**
 
-Now, we have everything we need to begin. Open the peeping-client.cpp source file in Visual Studio. Enter the relevant information in the first three variables of the main() function as shown below.
+Now, we have everything we need to begin. Open the *peeping-client project->source files->peeping-client.cpp* source file from the solutions explorer. Enter the relevant information in the first three variables of the main() function as shown below.
 
 ![Option Setting Demo](https://i.imgur.com/GlPzUKz.png)
 
-After your information is entered, build the project and you should find an executable in the following location:
+After your information is entered, build the project and you should find an executable in your version of the following location:
 
 ```console
 C:\Users\Abdullah Beta\source\repos\peeping-client\x64\Release
 ``` 
 
-Congratulations! You now have a fully customized keylogger configured to callback to you at regular intervals with encrypted keyboard data.
+Congratulations! You now have a fully customized keylogger configured to callback with encrypted keyboard data at regular intervals.
 
 **Step 6: Start listening server**
 
@@ -137,13 +137,15 @@ The final step is to begin listening for incoming keylogs from the target. You c
 ```console
 python3 toms-server.py -m server
 ```
-Once the server has started, enter the exact AES key you generated earlier and used in the peeping-client.cpp file. You should then get a message saying that the server has been started!
+Once the server has started, enter the exact AES key you generated earlier and used in the peeping-client.cpp source file. If the key is accepted, you should get a message saying that the server has been started!
 
 **Step 7: Analyze logs + important notes**
 
-Every time the target calls back home, you will receive a message on the terminal. Please be sure to not lose internet connection or close your Ngrok tunnel during this period as this would necessitate relaunching the peeping-client.exe executable on the target.
+All that's left is executing the newly-built peeping-client.exe on the target. I will the how of that to your creativity. Every time the interval you set passes, you will receive a message on the terminal. 
 
-All keylogs will be written to the keylog text file in the directory of the toms-server.py script and can be viewed from there. That's all for the instructions, hope you were able to get up and running!
+**Warning:**  ***Please be sure to not lose internet connection or close your Ngrok tunnel during this period as this would necessitate re-executing the peeping-client.exe program on the target.***
+
+All keylogs will be written to a keylog,txt file in the directory of the toms-server script and can be viewed from there. That's all for the instructions, hope you were able to get up and running without any major hurdles!
 ____
 
 ### Demo
