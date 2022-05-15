@@ -42,7 +42,6 @@ ____
 - [Visual Studio](https://visualstudio.microsoft.com/downloads/)  - The community edition is good enough for our purposes
 - [Python](https://www.python.org/downloads/) - Download and install Python 3.9 for your OS
 - [Ngrok](https://ngrok.com/download) - You will need a free Ngrok account as well as the Ngrok program to make your machine accessible from the internet
-
 ____
 
 ### Instructions
@@ -126,7 +125,6 @@ Install the required dependencies with:
 ```console
 pip install -r requirements.txt 
 ```
-
 Once everything is ready, run:
 
 ```console
@@ -136,15 +134,11 @@ This should output a 64 character AES-256 key which you will also need later on,
 
 **Step 5: Set required fields in peeping-client source**
 
-Now, we have everything we need to begin. Open the *peeping-client project->source files->peeping-client.cpp* source file from the solutions explorer. Enter the relevant information in the first two variables of the main() function shown below.
+Now, we have everything we need to begin. Open the *peeping-client project->source files->peeping-client.cpp* source file from the solutions explorer. Enter the relevant information in the first three variables of the main() function as shown below.
 
-![Option Setting](https://i.imgur.com/CcI8rty.png)
+![Option Setting Demo](https://i.imgur.com/GlPzUKz.png)
 
-After your information is entered, head over to *peeping-client project->header files->APIHook.h* and enter your desired interval for callback in **seconds** (i.e change 15 to 7200 for callback every two hours...you get the idea).
-
-![Interval Setting](https://i.imgur.com/Rf6zz4K.png)
-
-Finally, build the project and you should find an executable in your version of the following location:
+After your information is entered, build the project and you should find an executable in your version of the following location:
 
 ```console
 C:\Users\Abdullah Beta\source\repos\peeping-client\x64\Release
@@ -168,13 +162,11 @@ All that's left is executing the newly-built peeping-client.exe on the target. I
 **Warning:**  ***Please be sure to not lose internet connection or close your Ngrok tunnel during this period as this would necessitate re-executing the peeping-client.exe program on the target.***
 
 All keylogs will be written to a keylog,txt file in the directory of the toms-server script and can be viewed from there. That's all for the instructions, hope you were able to get up and running without any major hurdles!
-
 ____
 
 ### Demo
 
 Coming soon!
-
 ____
 
 ### Troubleshooting
@@ -200,13 +192,11 @@ ____
 ### Contributing
 
 When contributing to this repository, please discuss the change you wish to make via issue, [email](mailto:abdullahansari1618@outlook.com), or any other method with the me before making a change.
-
 ____
 
 ### Disclaimer
 
  This project is only for educational purpose. Any kind of bad behavior conducted with this project is the user's own responsibility. I hereby forfeit responsible for any illegal actions.
- 
 ____
 
 ### Acknowledgement 
