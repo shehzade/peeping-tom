@@ -8,6 +8,22 @@
 Welcome to the peeping-tom project repo! Peeping-tom is a two-part program with a peeping-client deployed on a target and a toms-server listening for keylogs on the attacker machine. Getting up and running requires a decent amount of set up, so make sure to carefully read and follow the instructions below.
 
 Of course, if you have any suggestions, feedback, issues, etc... feel free to reach out or create an issue/pull request. 
+
+____
+
+### Contents
+
+- [Features](#features)
+- [Pre-Requisites](#pre-requisites)
+- [Instructions](#instructions)
+- [Demo](#demo)
+- [Troubleshooting](#troubleshooting)
+- [How to protect yourself?](#how-to-protect-yourself)
+- [Contributing](#contributing)
+- [Disclaimer](#contributing)
+- [Acknowledgement](#acknowledgement)
+- [Contact](#contact)
+
 ____
 
 ### Features
@@ -32,7 +48,7 @@ ____
 
 **Step 1: Open peeping-tom solutions file in Visual Studio**
 
-First things first, download and install the community edition of Visual Studio onto your machine from the [link above](###Pre-Requisites). When moving through the installer, make sure to select the "Python development" and the "Desktop development with C++" workloads as they will be necessary to properly load and compile the project.
+First things first, download and install the community edition of Visual Studio onto your machine from the [link above](#pre-requisites). When moving through the installer, make sure to select the "Python development" and the "Desktop development with C++" workloads as they will be necessary to properly load and compile the project.
 
 ![Visual Studio Required Workloads](https://i.imgur.com/AfawekT.png)
 
@@ -80,7 +96,7 @@ Make sure that the peeping-client project is also set to "Release" and that the 
 
 **Step 3: Open an public tunnel to localhost:80**
 
-Onto to the tunnel. Once you've created an Ngrok account, download Ngrok for your OS from the [link above](###Pre-Requisites) and extract the executable from the ZIP file. Before opening a tunnel, you will need to grab a personal authentication token from your account as shown below.
+Onto to the tunnel. Once you've created an Ngrok account, download Ngrok for your OS from the [link above](#pre-requisites) and extract the executable from the ZIP file. Before opening a tunnel, you will need to grab a personal authentication token from your account as shown below.
 
 ![Ngrok Authtoken](https://i.imgur.com/fLOreRu.png)
 
@@ -164,7 +180,7 @@ pip install requests
 
 ____
 
-### How to protect yourself from a Keylogger?
+### How to protect yourself?
 
 1.  Use the on-screen keyboard for ultra-sensitive information
 2.  Update your antivirus software regularly
@@ -183,7 +199,7 @@ ____
  This project is only for educational purpose. Any kind of bad behavior conducted with this project is the user's own responsibility. I hereby forfeit responsible for any illegal actions.
 ____
 
-### Acknowledgment 
+### Acknowledgement 
 
  This project was partially guided by  Ermin Kreponic's [Udemy course](https://www.udemy.com/course/how-to-create-an-advanced-keylogger-from-scratch-for-windows/?utm_source=adwords&utm_medium=udemyads&utm_campaign=DSA_Catchall_la.EN_cc.US&utm_content=deal4584&utm_term=_._ag_95911180068_._ad_532194018662_._kw__._de_c_._dm__._pl__._ti_dsa-437115340933_._li_9027793_._pd__._&matchtype=&gclid=Cj0KCQjwpv2TBhDoARIsALBnVnkvfomOaJmfcSnd_eFIFMl01QSMYnwYxlvFP-ig8LnZAamJqX28AywaAgivEALw_wcB) and was overhauled to incorporate some new ideas I had and new skills I had learned.
 
