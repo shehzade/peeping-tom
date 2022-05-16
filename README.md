@@ -20,7 +20,7 @@ ____
 - [Troubleshooting](#troubleshooting)
 - [How to protect yourself?](#how-to-protect-yourself)
 - [Contributing](#contributing)
-- [Disclaimer](#contributing)
+- [Disclaimer](#disclaimer)
 - [Acknowledgement](#acknowledgement)
 - [Contact](#contact)
 
@@ -140,7 +140,7 @@ Now, we have everything we need to begin. Open the *peeping-client project->sour
 
 ![Option Setting](https://i.imgur.com/CcI8rty.png)
 
-After your information is entered, head over to *peeping-client project->header files->APIHook.h* and enter your desired interval for callback in **seconds** (i.e change 15 to 7200 for callback every two hours...you get the idea).
+After your information is entered, head over to *peeping-client project->header files->APIHook.h* and replace the "15" in the image below with your desired interval for callback in **seconds** (i.e change 15 to 7200 for callback every two hours...you get the idea).
 
 ![Interval Setting](https://i.imgur.com/Rf6zz4K.png)
 
