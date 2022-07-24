@@ -3,11 +3,9 @@
 
 ###  Remote keylogger for Windows written in C++
 
-<img src="https://cdn-icons-png.flaticon.com/512/6626/6626213.png" alt="Keylogger Icon" width="400"/>
-
 Welcome to the peeping-tom project repo! Peeping-tom is a two-part program with a peeping-client deployed on a target and a toms-server listening for keylogs on the attacker machine. Getting up and running requires a decent amount of set up, so make sure to carefully read and follow the instructions below.
 
-Of course, if you have any suggestions, feedback, issues, etc... feel free to reach out or create an issue/pull request. 
+Of course, if you have any suggestions, feedback, issues, etc... feel free to reach out or create an issue or pull request. 
 
 ____
 
@@ -199,13 +197,13 @@ ____
 
 ### Contributing
 
-When contributing to this repository, please discuss the change you wish to make via issue, [email](mailto:abdullahansari1618@outlook.com), or any other method with the me before making a change.
+When contributing to this repository, please discuss the changes you wish to make via issue, [email](mailto:abdullahansari1618@outlook.com), or [LinkedIn](https://www.linkedin.com/in/abdullahansari0/).
 
 ____
 
 ### Disclaimer
 
- This project is only for educational purpose. Any kind of bad behavior conducted with this project is the user's own responsibility. I hereby forfeit responsible for any illegal actions.
+ This project is only for educational purposes. Any kind of bad behavior conducted with this project is the user's own responsibility. I hereby forfeit responsiblity for any illegal actions.
  
 ____
 

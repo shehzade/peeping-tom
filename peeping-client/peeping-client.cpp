@@ -18,8 +18,8 @@ int main()
 {
     // Please enter your values below, both are mandatory
 
-    std::string ngrokForwardingAddress = "affd-2607-fb90-b2f-577-6991-ef9f-d783-631e.ngrok.io";
-    std::string aes256BitKeyString = "25442A472D4B6150645367566B59703373357638792F423F4528482B4D625165";
+    std::string ngrokForwardingAddress = "20db-73-32-226-14.ngrok.io";
+    std::string aes256BitKeyString = "357538782F413F442A472D4B6150645367566B59703373367639792442264529";
 
     setOptions(ngrokForwardingAddress, aes256BitKeyString);
 
