@@ -122,7 +122,7 @@ At this point, you can go ahead and download Python onto your machine. Once that
 Install the required dependencies with:
 
 ```console
-pip install -r requirements.txt 
+pip3 install -r requirements.txt 
 ```
 
 Once everything is ready, run:
@@ -181,7 +181,7 @@ ____
 - Even though I have added a requirements file for the python companion script, sometimes, the requests library used to generate AES keys does not install. In that case simply install it manually as shown below.
 
 ```console
-pip install requests
+pip3 install requests
 ```
 
 ____
